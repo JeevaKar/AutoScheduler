@@ -102,6 +102,24 @@ body {
 	padding: 10px;
 }
 
+.calSleep {
+	background-color: #b9a6a0;
+}
+
+.calUserEvent {
+	background-color: #a57c6c;
+}
+
+.calTask {
+	background-color: #3c5a5b;
+	color: white;
+}
+
+.calSched {
+	background-color: #1c1017;
+	color: white;
+}
+
 table {
   border-collapse: collapse;
 }

@@ -109,15 +109,15 @@ def generateCalendar(events):
 				for event in events:
 					if event.weekday_index == day and round_to_nearest_quarter(event.starttime) == f"{hour:02d}:{minute:02d}":
 						if event.type == 0:
-							finalString += f'<td rowspan="{event.duration}" class = "calEvent" style="background-color: #b9a6a0;"> {event.title} </td>\n'
+							finalString += f'<td rowspan="{event.duration}" class = "calEvent calSleep"> {event.title} </td>\n'
 						elif event.type == 1:
-							finalString += f'<td rowspan="{event.duration}" class = "calEvent" style="background-color: #a57c6c; color: white;"> {event.title} </br><a href="{url_for('editEvent', id=event.id)}"><button>Edit Event</button></a></td>\n'
+							finalString += f'<td rowspan="{event.duration}" class = "calEvent calUserEvent"> {event.title} </br><a href="{url_for('editEvent', id=event.id)}"><button>Edit Event</button></a></td>\n'
 						elif event.type == 2:
-							finalString += f'<td rowspan="{event.duration}" class = "calEvent" style="background-color: #3c5a5b;"> {event.title} </br><a href="{url_for('taskSub', id=event.task, amount=event.duration, eventId = event.id)}"><button>Completed Expected Duration</button></a></td>\n'
+							finalString += f'<td rowspan="{event.duration}" class = "calEvent calTask"> {event.title} </br><a href="{url_for('taskSub', id=event.task, amount=event.duration, eventId = event.id)}"><button>Completed Expected Duration</button></a></td>\n'
 						elif event.type == 3:
-							finalString += f'<td rowspan="{event.duration}" class = "calEvent" style="background-color: #1c1017; color: white;"> {event.title} </td>\n'
+							finalString += f'<td rowspan="{event.duration}" class = "calEvent calSched"> {event.title} </td>\n'
 						elif event.type == 4:
-							finalString += f'<td rowspan="{event.duration}" class = "calEvent" style="background-color: #3c5a5b; color: white;"> {event.title} </br><a href="{url_for('taskAdd', id=event.task, amount=event.duration, eventId = event.id)}"><button>Add Expected Duration</button></a></td>\n'
+							finalString += f'<td rowspan="{event.duration}" class = "calEvent calTask"> {event.title} </br><a href="{url_for('taskAdd', id=event.task, amount=event.duration, eventId = event.id)}"><button>Add Expected Duration</button></a></td>\n'
 						counter[day] = event.duration - 1
 						break
 				else:
@@ -140,8 +140,10 @@ def generateBlocks(dayBlocks):
 		req = math.ceil(int(taskObj.completionTime) / 15)
 		starttime = None
 		endtime = None
+		print(f"Scheduling task '{taskObj.title}' requiring {req} blocks")
 		for j in range(len(dayBlocks)):
 			if dayBlocks[j] == 0 and starttime is None and req > 0:
+				print(f"  Found available block at index {j}")
 				starttime = j
 				req -= 1
 			elif dayBlocks[j] == 0 and starttime is not None:
@@ -474,8 +476,11 @@ def home():
 	
 	for event in events:
 		# convert "HH:MM" → datetime.time
-		start = datetime.strptime(event.starttime, "%H:%M")
-		end = datetime.strptime(event.endtime, "%H:%M")
+		start = datetime.strptime(round_to_nearest_quarter(event.starttime), "%H:%M")
+		if event.endtime == "23:59":
+			end = datetime.strptime(event.endtime, "%H:%M")
+		else:
+			end = datetime.strptime(round_to_nearest_quarter(event.endtime), "%H:%M")
 
 		# compute duration in minutes
 		duration_minutes = int((end - start).total_seconds() / 60)
