@@ -7,13 +7,13 @@
 {% block body %}
 <div class="formDiv">
 	<form method="POST" class="form">
-		<h2>Edit Event: <input type="text" name="title" value="{{ event.title }}"></h2>
+		<h2>Edit Event: <input type="text" name="title" value="{{ event.title }}" required></h2>
 		<label for="date">Date:</label>
-		<input type="date" name="date" id="date" value="{{ event.date }}">
+		<input type="date" name="date" id="date" value="{{ event.date }}" required>
 		<label for="starttime">Start Time:</label>
-		<input type="time" name="starttime" id="starttime" value="{{ event.starttime }}">
+		<input type="time" name="starttime" id="starttime" value="{{ event.starttime }}" required>
 		<label for="endtime">End Time:</label>
-		<input type="time" name="endtime" id="endtime" value="{{ event.endtime }}">
+		<input type="time" name="endtime" id="endtime" value="{{ event.endtime }}" required>
 		<button type="submit">Save Changes</button>	
 	</form>
 	<a href="{{ url_for('deleteEvent', id=event.id) }}"><button>Delete Event</button></a>

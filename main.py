@@ -164,7 +164,7 @@ def generateBlocks(dayBlocks):
 			end_str = f"{end_hour:02}:{end_minute:02}"
 			scheduledEvent = Event(
 				title = taskObj.title,
-				date = datetime.today().strftime('%Y-%m-%d'),
+				date = datetime.now(pst).date().strftime('%Y-%m-%d'),
 				starttime = start_str,
 				endtime = end_str,
 				description = "Task Scheduled",
@@ -183,7 +183,7 @@ def update():
 	user = db.one_or_404(db.select(User).filter_by(username = session["username"]))
 	stmt = db.select(schedule).filter_by(user_id=user.id)
 	schedules = db.session.execute(stmt).scalars().all()
-	today = datetime.today()
+	today = datetime.now(pst).date()
 	if user.monWake:
 		match today.strftime('%a'):
 			case "Mon":
