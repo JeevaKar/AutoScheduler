@@ -1,0 +1,23 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block bodyClass %}form-page{% endblock %}
+
+{% block body %}
+<div class="formDiv">
+	<h2>Sign Up</h2>
+	<form method="post" class="form">
+	    <label for="username">Username</label>
+	    <input name="username" id="username" required>
+
+	    <label for="password">Password</label>
+	    <input type="password" name="password" id="password" required>
+		
+		<label for="cpassword">Confirm Password</label>
+		<input type="password" name="cpassword" id="cpassword" required>
+
+	    <input type="submit" id="submit" value="Sign Up">
+	</form>
+</div>
+{% endblock %}

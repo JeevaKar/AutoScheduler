@@ -1,0 +1,12 @@
+{% extends 'base.jinja' %}
+
+{% block title %}View Schedules{% endblock %}
+
+{% block body %}
+{% for schedule in schedules %}
+	<a href="{{ url_for('editSchedule', id=schedule.id) }}"><button>{{ schedule.title }}</button></a>
+	<br/>
+{% endfor %}
+<a href="{{ url_for('addSchedule') }}"><button>Add Schedule</button>
+<a href="{{ url_for('home') }}"><button>Back to Calendar</button></a>
+{% endblock %}

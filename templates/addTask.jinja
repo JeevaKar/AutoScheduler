@@ -1,0 +1,23 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Add Task{% endblock %}
+
+{% block bodyClass %}form-page{% endblock %}
+
+{% block body %}
+<div class="formDiv">
+	<form class="form"method="POST">
+		<h2>Make Task:</h2>
+		<label for="title">Title:</label>
+		<input type="text" name="title" id="title">
+		<label for="dueDate">Due Date:</label>
+		<input type="date" name="dueDate" id="dueDate">
+		<label for="dueTime">Due Time:</label>
+		<input type="time" name="dueTime" id="dueTime">
+		<label for="completionTime">Estimated Completion Time (minutes):</label>
+		<input type="number" name="completionTime" id="completionTime">
+		<button type="submit">Save Task</button>
+	</form>
+	<a href="{{ url_for('home') }}"><button>Back to Calendar</button></a>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.jinja' %}
+
+{% block title %}View Schedules{% endblock %}
+
+{% block bodyClass %}form-page{% endblock %}
+
+{% block body %}
+<div class="formDiv">
+	<form class="form" method="POST">
+		<h2>Edit Schedule:</h2>
+		<label for="title">Title:</label>
+		<input type="text" name="title" id="title" value="{{ schedule.title }}">
+		<label for="monStart">Monday Start Time:</label>
+		<input type="time" id="monStart" name="monStart" value="{{ schedule.monStart }}">
+		<br>
+		<label for="monEnd">Monday End Time:</label>
+		<input type="time" id="monEnd" name="monEnd" value="{{ schedule.monEnd }}">
+		<br>
+		<label for="tueStart">Tuesday Start Time:</label>
+		<input type="time" id="tueStart" name="tueStart" value="{{ schedule.tueStart }}">
+		<br>
+		<label for="tueEnd">Tuesday End Time:</label>
+		<input type="time" id="tueEnd" name="tueEnd" value="{{ schedule.tueEnd }}">
+		<br>
+		<label for="wedStart">Wednesday Start Time:</label>
+		<input type="time" id="wedStart" name="wedStart" value="{{ schedule.wedStart }}">
+		<br>
+		<label for="wedEnd">Wednesday End Time:</label>
+		<input type="time" id="wedEnd" name="wedEnd" value="{{ schedule.wedEnd }}">
+		<br>
+		<label for="thuStart">Thursday Start Time:</label>
+		<input type="time" id="thuStart" name="thuStart" value="{{ schedule.thuStart }}">
+		<br>
+		<label for="thuEnd">Thursday End Time:</label>
+		<input type="time" id="thuEnd" name="thuEnd" value="{{ schedule.thuEnd }}">
+		<br>
+		<label for="friStart">Friday Start Time:</label>
+		<input type="time" id="friStart" name="friStart" value="{{ schedule.friStart }}">
+		<br>
+		<label for="friEnd">Friday End Time:</label>
+		<input type="time" id="friEnd" name="friEnd" value="{{ schedule.friEnd }}">
+		<br>
+		<label for="satStart">Saturday Start Time:</label>
+		<input type="time" id="satStart" name="satStart" value="{{ schedule.satStart }}">
+		<br>
+		<label for="satEnd">Saturday End Time:</label>
+		<input type="time" id="satEnd" name="satEnd" value="{{ schedule.satEnd }}">
+		<br>
+		<label for="sunStart">Sunday Start Time:</label>
+		<input type="time" id="sunStart" name="sunStart" value="{{ schedule.sunStart }}">
+		<br>
+		<label for="sunEnd">Sunday End Time:</label>
+		<input type="time" id="sunEnd" name="sunEnd" value="{{ schedule.sunEnd }}">
+		<br>
+		<button type="submit">Save Changes</button>
+	</form>
+	<a href="{{ url_for('deleteSchedule', id=schedule.id) }}"><button>Delete Schedule</button></a>
+</div>
+{% endblock %}

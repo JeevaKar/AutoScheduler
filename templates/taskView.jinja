@@ -1,0 +1,23 @@
+{% extends 'base.jinja' %}
+
+{% block title %}View Tasks{% endblock %}
+
+{% block body %}
+<h1 class="taskHeader">Your Tasks</h1>
+{% for task in tasks %}
+	<div class="task-card">
+		<h2>{{ task.title }}</h2>
+		<p>Due Date: {{ task.dueDate }}</p>
+		<p>Due Time: {{ task.dueTime }}</p>
+		<p>Estimated Completion Time: {{ task.completionTime }} minutes</p>
+		<a href="{{ url_for('editTask', id=task.id) }}"><button>Edit Task</button></a>
+		<a href="{{ url_for('completeTask', id=task.id) }}"><button>Mark as Complete</button></a>
+	</div>
+{% else %}
+	<div class="task-card">
+		<p>No tasks available.</p>
+	</div>
+{% endfor %}
+<a href="/add_task"><button class = "taskReturn">Add Task</button></a>
+<a href="{{ url_for('home') }}"><button class="taskReturn">Back to Calendar</button></a>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block bodyClass %}form-page{% endblock %}
+
+{% block body %}
+<div class="formDiv">
+	<form method="POST" class="form">
+		<h2>Edit Event: <input type="text" name="title" value="{{ event.title }}"></h2>
+		<label for="date">Date:</label>
+		<input type="date" name="date" id="date" value="{{ event.date }}">
+		<label for="starttime">Start Time:</label>
+		<input type="time" name="starttime" id="starttime" value="{{ event.starttime }}">
+		<label for="endtime">End Time:</label>
+		<input type="time" name="endtime" id="endtime" value="{{ event.endtime }}">
+		<button type="submit">Save Changes</button>	
+	</form>
+	<a href="{{ url_for('deleteEvent', id=event.id) }}"><button>Delete Event</button></a>
+</div>
+{% endblock %}

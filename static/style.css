@@ -1,0 +1,210 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #a57c6c;
+}
+
+.p5spacer {
+	padding: 5%;
+}
+
+.sidebar {
+	width: 14%;
+	height: 100%;
+	background-color: #1c1017;
+	color: white;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	padding-left: 1%;
+	padding-right: 1%;
+	overflow-x: hidden;
+}
+
+.sidebar .sidebar-button {
+	width: 100%;
+	height: 40px;
+	margin-top: 10px;
+	background-color: #2e2028;
+	color: white;
+	border: none;
+	text-align: left;
+	padding-left: 10px;
+	font-size: 16px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.main {
+  margin-left: 16%; /* Same as the width of the sidebar */
+}
+
+.nav {
+	width: 100%;
+	height: 50px;
+	background-color: #1c1017;
+	color: white;
+}
+
+.calendar {
+	width: 100%;
+	table-layout: fixed;
+	background-color: lightgray;
+}
+
+.calendar td {
+	height: 30px;
+}
+
+.calendar .time {
+	width: 3%;
+}
+
+.calendar th, td {
+	vertical-align: top;
+}
+
+.calendar th .outer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.calendar th .outer .date {
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bedtimeForm {
+	width: 100%;
+	text-align: center;
+}
+
+.bedtimeForm input[type="time"] {
+	width: 90%;
+}
+
+.calEvent {
+	border-radius: 10px;
+	padding: 10px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px solid grey;
+	padding: 5px;
+}
+
+.time {
+	border: 1px dashed grey;
+}
+
+.form-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	margin: 0; 
+}
+
+.formDiv {
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	background-image: linear-gradient(45deg, #3c5a5b, #1c1017);
+	color: white;
+	padding: 10px 20px 25px 20px;
+	border-radius: 8px;
+}
+
+.formDiv .form {
+	display: flex;
+	flex-direction: column;
+}
+
+.form label {
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-size: 16px;
+}
+
+.form input {
+	padding: 8px;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+.form #submit {
+	margin-top: 15px;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background-color: #b9a6a0;
+	cursor: pointer;
+	font-size: 16px;
+	width: 100%;
+}
+
+.formDiv button {
+	margin-top: 15px;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	background-color: #b9a6a0;
+	cursor: pointer;
+	font-size: 16px;
+	width: 100%;
+}
+
+.taskHeader {
+	background-color: #1c1017;
+	color: white;
+	border-radius: 8px;
+	margin: 10px 10px 10px 10px;
+	padding: 10px;
+}
+
+.task-card {
+	background-color: #1c1017;
+	color: white;
+	border-radius: 8px;
+	padding: 10px;
+	margin: 5px 10px;
+}
+
+.task-card button {
+	background-color: #b9a6a0;
+	border: none;
+	border-radius: 5px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.taskReturn {
+	text-align: left;
+	border: none;
+	background-color: #1c1017;
+	color: white;
+	padding: 10px;
+	margin: 5px 10px;
+	border-radius: 8px;
+	width: calc(100% - 20px);
+	cursor: pointer;
+}

@@ -1,0 +1,59 @@
+{% extends 'base.jinja' %}
+
+{% block title %}View Schedules{% endblock %}
+
+{% block bodyClass %}form-page{% endblock %}
+
+{% block body %}
+<div class="formDiv">
+	<form class="form" method="POST">
+		<h2>Make Schedule:</h2>
+		<label for="title">Title:</label>
+		<input type="text" name="title" id="title">
+		<label for="monStart">Monday Start Time:</label>
+		<input type="time" id="monStart" name="monStart">
+		<br>
+		<label for="monEnd">Monday End Time:</label>
+		<input type="time" id="monEnd" name="monEnd">
+		<br>
+		<label for="tueStart">Tuesday Start Time:</label>
+		<input type="time" id="tueStart" name="tueStart">
+		<br>
+		<label for="tueEnd">Tuesday End Time:</label>
+		<input type="time" id="tueEnd" name="tueEnd">
+		<br>
+		<label for="wedStart">Wednesday Start Time:</label>
+		<input type="time" id="wedStart" name="wedStart">
+		<br>
+		<label for="wedEnd">Wednesday End Time:</label>
+		<input type="time" id="wedEnd" name="wedEnd">
+		<br>
+		<label for="thuStart">Thursday Start Time:</label>
+		<input type="time" id="thuStart" name="thuStart">
+		<br>
+		<label for="thuEnd">Thursday End Time:</label>
+		<input type="time" id="thuEnd" name="thuEnd">
+		<br>
+		<label for="friStart">Friday Start Time:</label>
+		<input type="time" id="friStart" name="friStart">
+		<br>
+		<label for="friEnd">Friday End Time:</label>
+		<input type="time" id="friEnd" name="friEnd">
+		<br>
+		<label for="satStart">Saturday Start Time:</label>
+		<input type="time" id="satStart" name="satStart">
+		<br>
+		<label for="satEnd">Saturday End Time:</label>
+		<input type="time" id="satEnd" name="satEnd">
+		<br>
+		<label for="sunStart">Sunday Start Time:</label>
+		<input type="time" id="sunStart" name="sunStart">
+		<br>
+		<label for="sunEnd">Sunday End Time:</label>
+		<input type="time" id="sunEnd" name="sunEnd">
+		<br>
+		<button type="submit">Save Changes</button>
+	</form>
+	<a href="{{ url_for('home') }}"><button>Back to Calendar</button></a>
+</div>
+{% endblock %}

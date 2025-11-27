@@ -1,0 +1,54 @@
+{% extends 'frame.jinja' %}
+
+{% block fbody %}
+<div class = "sidebar">
+	<a href="/add_event"><button class = "sidebar-button">Add Event</button></a>
+	<a href="/edit_sleep_schedule"><button class = "sidebar-button">Edit Sleep Schedule</button></a>
+	<a href="/view_schedules"><button class = "sidebar-button">View Schedules</button></a>
+	<a href="/view_tasks"><button class = "sidebar-button">View Tasks</button></a>
+	<a href="/update"><button class = "sidebar-button">Update</button></a>
+	<a href="/logout"><button class = "sidebar-button">Log out</button></a>
+</div>
+
+<div class = "main">
+{% with messages = get_flashed_messages()%}
+    {% if messages%}
+		{% for message in messages%}
+			<p>{{message}}</p>
+		{%endfor%}
+	{%endif%}
+{%endwith%}
+<div class = "nav">
+</div>
+<div class = "week">
+	<table class = "calendar">
+		<tr>
+			<th class="time"></th>
+			<th id='Monday'></th>
+			<th id='Tuesday'></th>
+			<th id='Wednesday'></th>
+			<th id='Thursday'></th>
+			<th id='Friday'></th>
+			<th id='Saturday'></th>
+			<th id='Sunday'></th>
+		</tr>
+		{{ table }}
+	</table>
+</div>
+
+<script>
+	const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+	const daysShort = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+	const today = new Date();
+	let date = today.getDate() - today.getDay() + 1;
+	for (let i = 0; i < 7; i++) {
+		document.getElementById(days[i]).innerHTML = daysShort[i] + '<br\>' + '<div class="outer">' + '<div class="date">' + (date + i) + '</div></div>';
+		if (date + i == today.getDate()) {
+			todayElement = document.getElementById(days[i])
+			dateElement = todayElement.getElementsByClassName('date')[0];
+			dateElement.style.backgroundColor = '#1c1017';
+			dateElement.style.color = 'white';
+		}
+	}
+</script>
+{% endblock %}

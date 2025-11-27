@@ -1,0 +1,41 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Edit Sleep Schedule{% endblock %}
+
+{% block body %}
+<form method="POST">
+	<table class="bedtimeForm">
+		<tr>
+			<th>Day</th>
+			<th>Monday</th>
+			<th>Tuesday</th>
+			<th>Wednesday</th>
+			<th>Thursday</th>
+			<th>Friday</th>
+			<th>Saturday</th>
+			<th>Sunday</th>
+		</tr>
+		<tr>
+			<td>Wake Time</td>
+			<td><input type="time" name="monWake" value="{{ user.monWake }}" required></td>
+			<td><input type="time" name="tueWake" value="{{ user.tueWake }}" required></td>
+			<td><input type="time" name="wedWake" value="{{ user.wedWake }}" required></td>
+			<td><input type="time" name="thuWake" value="{{ user.thuWake }}" required></td>
+			<td><input type="time" name="friWake" value="{{ user.friWake }}" required></td>
+			<td><input type="time" name="satWake" value="{{ user.satWake }}" required></td>
+			<td><input type="time" name="sunWake" value="{{ user.sunWake }}" required></td>
+		</tr>
+		<tr>
+			<td>Bed Time</td>
+			<td><input type="time" name="monBed" value="{{ user.monBed }}" required></td>
+			<td><input type="time" name="tueBed" value="{{ user.tueBed }}" required></td>
+			<td><input type="time" name="wedBed" value="{{ user.wedBed }}" required></td>
+			<td><input type="time" name="thuBed" value="{{ user.thuBed }}" required></td>
+			<td><input type="time" name="friBed" value="{{ user.friBed }}" required></td>
+			<td><input type="time" name="satBed" value="{{ user.satBed }}" required></td>
+			<td><input type="time" name="sunBed" value="{{ user.sunBed }}" required></td>
+		</tr>
+	</table>
+	<input type="submit" value="Save Schedule">
+</form>
+{% endblock %}

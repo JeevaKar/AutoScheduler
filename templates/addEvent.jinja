@@ -1,0 +1,23 @@
+{% extends 'base.jinja' %}
+
+{% block title %}View Schedules{% endblock %}
+
+{% block bodyClass %}form-page{% endblock %}
+
+{% block body %}
+<div class = "formDiv">
+	<form class = "form" method="POST">
+		<h2>Create Event:</h2>
+		<label for="title">Title:</label>
+		<input type="text" name="title">
+		<label for="date">Date:</label>
+		<input type="date" name="date" id="date">
+		<label for="starttime">Start Time:</label>
+		<input type="time" name="starttime" id="starttime">
+		<label for="endtime">End Time:</label>
+		<input type="time" name="endtime" id="endtime">
+		<button type="submit" id="submit">Save Changes</button>	
+	</form>
+	<a href="{{ url_for('home') }}"><button>Back to Calendar</button></a>
+</div>
+{% endblock %}
