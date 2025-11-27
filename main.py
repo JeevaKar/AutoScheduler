@@ -6,7 +6,7 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime, timedelta
-from helper import mark_event_time, mark_time_blocks
+from helper import mark_event_time, mark_time_blocks, round_to_nearest_quarter
 import math
 import pytz
 
@@ -107,7 +107,7 @@ def generateCalendar(events):
 					counter[day] -= 1
 					continue
 				for event in events:
-					if event.weekday_index == day and event.starttime == f"{hour:02d}:{minute:02d}":
+					if event.weekday_index == day and round_to_nearest_quarter(event.starttime) == f"{hour:02d}:{minute:02d}":
 						if event.type == 0:
 							finalString += f'<td rowspan="{event.duration}" class = "calEvent" style="background-color: #b9a6a0;"> {event.title} </td>\n'
 						elif event.type == 1:
@@ -754,4 +754,4 @@ def taskAdd(id, amount, eventId):
 	return redirect(url_for('home'))
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=80, debug=False)
+	app.run(host='0.0.0.0', port=80, debug=True)
