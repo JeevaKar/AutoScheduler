@@ -140,10 +140,8 @@ def generateBlocks(dayBlocks):
 		req = math.ceil(int(taskObj.completionTime) / 15)
 		starttime = None
 		endtime = None
-		print(f"Scheduling task '{taskObj.title}' requiring {req} blocks")
 		for j in range(len(dayBlocks)):
 			if dayBlocks[j] == 0 and starttime is None and req > 0:
-				print(f"  Found available block at index {j}")
 				starttime = j
 				req -= 1
 			elif dayBlocks[j] == 0 and starttime is not None:
