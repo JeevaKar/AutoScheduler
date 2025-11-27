@@ -1,4 +1,7 @@
 from datetime import datetime
+import pytz
+
+pst = pytz.timezone("America/Los_Angeles")
 
 def mark_event_time(time_blocks, start_time, end_time):
     # Convert military time "HH:MM" to indices for 15-minute blocks
@@ -23,7 +26,7 @@ def mark_event_time(time_blocks, start_time, end_time):
 
 def mark_time_blocks(time_blocks):
     # Get the current time
-    current_time = datetime.now()
+    current_time = datetime.now(pst)
     
     # Get the current hour and minute
     current_hour = current_time.hour
