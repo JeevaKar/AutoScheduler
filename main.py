@@ -5,9 +5,12 @@ import secrets
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 from helper import mark_event_time, mark_time_blocks
 import math
+import pytz
+
+pst = pytz.timezone("America/Los_Angeles")
 
 class Base(DeclarativeBase):
   pass
@@ -420,14 +423,14 @@ def update():
 	events = db.session.execute(stmt).scalars().all()
 	for event in events:
 		dayBlocks = mark_event_time(dayBlocks, event.starttime, event.endtime)
-	user.lastUpdate = str(datetime.now().strftime('%Y-%m-%d'))
+	user.lastUpdate = str(datetime.now(pst).strftime('%Y-%m-%d'))
 	dayBlocks = mark_time_blocks(dayBlocks)
 	generateBlocks(dayBlocks)
 	db.session.commit()
 
 def clearEvents():
 	user = db.one_or_404(db.select(User).filter_by(username = session["username"]))
-	stmt = db.select(Event).filter_by(user_id = user.id, date = datetime.now().strftime('%Y-%m-%d')).filter(Event.type.in_([0, 2, 3]))
+	stmt = db.select(Event).filter_by(user_id = user.id, date = datetime.now(pst).strftime('%Y-%m-%d')).filter(Event.type.in_([0, 2, 3]))
 	events = db.session.execute(stmt).scalars().all()
 	for event in events:
 		db.session.delete(event)
@@ -442,12 +445,12 @@ def home():
 	if not session.get("username"):
 		return redirect('/login')
 	user = db.one_or_404(db.select(User).filter_by(username = session["username"]))
-	if user.lastUpdate != str(datetime.now().strftime('%Y-%m-%d')):
+	if user.lastUpdate != str(datetime.now(pst).strftime('%Y-%m-%d')):
 		update()
 	stmt = db.select(Event).filter_by(user_id=user.id)
 	events = db.session.execute(stmt).scalars().all()
 
-	today = date.today()
+	today = datetime.now(pst).date()
 	week_start = get_start_of_week(today)
 	week_end = week_start + timedelta(days=6)
 
