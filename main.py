@@ -149,8 +149,6 @@ def generateBlocks(dayBlocks):
 		endtime = None
 		length = 0
 		for j in range(len(dayBlocks)):
-			print(length, workBlock, breakFlag, req)
-			print(req > 0, breakFlag)
 			if length >= workBlock:
 				breakFlag = True
 			if dayBlocks[j] == 0 and starttime is None and req > 0:
