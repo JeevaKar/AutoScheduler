@@ -35,6 +35,7 @@
 		{{ table }}
 	</table>
 </div>
+</div>
 
 <script>
 	const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -50,5 +51,10 @@
 			dateElement.style.color = 'white';
 		}
 	}
+	window.addEventListener("load", function() {
+	    const currentTime = "{{ time }}";
+	    const timeCell = document.getElementById(currentTime);
+		timeCell.scrollIntoView({ block: "center", behavior: "smooth" });
+	});
 </script>
 {% endblock %}

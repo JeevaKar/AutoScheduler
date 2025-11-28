@@ -98,9 +98,9 @@ def generateCalendar(events):
 		for minute in [0, 15, 30, 45]:
 			finalString += '<tr>\n'
 			if minute == 0 or minute == 30:
-				finalString += f'    <td class="time">{hour:02d}:{minute:02d}</td>\n'
+				finalString += f'    <td class="time" id="{hour:02d}:{minute:02d}">{hour:02d}:{minute:02d}</td>\n'
 			else:
-				finalString += '    <td class="time"></td>\n'
+				finalString += f'    <td class="time" id="{hour:02d}:{minute:02d}"></td>\n'
 			for day in range(0, 7):
 				if counter[day] > 0:
 					finalString += ''
@@ -489,7 +489,8 @@ def home():
 		filtered_events.append(event)
 	
 	table = generateCalendar(filtered_events)
-	return render_template('index.jinja', table=table)
+	time = round_to_nearest_quarter(datetime.now(pst).strftime('%H:%M'))
+	return render_template('index.jinja', table=table, time=time)
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
