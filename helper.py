@@ -63,3 +63,11 @@ def round_to_nearest_quarter(time_str: str) -> str:
 	new_minutes = rounded % 60
 	
 	return f"{new_hours:02d}:{new_minutes:02d}"
+
+
+def round_to_nearest_fifteen(time: str) -> str:
+	time = int(time)
+	return round(time / 15) * 15
+
+def min_to_blocks(minutes: int) -> int:
+	return minutes // 15

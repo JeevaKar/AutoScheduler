@@ -6,7 +6,7 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 from datetime import datetime, timedelta
-from helper import mark_event_time, mark_time_blocks, round_to_nearest_quarter
+from helper import mark_event_time, mark_time_blocks, min_to_blocks, round_to_nearest_quarter, round_to_nearest_fifteen
 import math
 import pytz
 
@@ -33,6 +33,8 @@ class User(db.Model):
 	username: Mapped[str] = mapped_column(unique=True)
 	password: Mapped[str] = mapped_column()
 	lastUpdate: Mapped[str] = mapped_column(nullable=True)
+	workBlockLength: Mapped[int] = mapped_column(nullable=True)
+	breakBlockLength: Mapped[int] = mapped_column(nullable=True)
 	monWake: Mapped[int] = mapped_column(nullable=True)
 	monBed: Mapped[int] = mapped_column(nullable=True)
 	tueWake: Mapped[int] = mapped_column(nullable=True)
@@ -130,21 +132,39 @@ def generateBlocks(dayBlocks):
 	user = db.one_or_404(db.select(User).filter_by(username = session["username"]))
 	stmt = db.select(task).filter_by(user_id=user.id, completed=False).order_by(task.dueDate, task.dueTime)
 	tasks = db.session.execute(stmt).scalars().all()
+	if user.workBlockLength:
+		workBlock = min_to_blocks(user.workBlockLength)
+	else:
+		workBlock = 96
 
 	for t in tasks:
 		db.session.expunge(t)
 
 	i = 0
+	breakFlag = False
 	while i < len(tasks):
 		taskObj = tasks[i]
 		req = math.ceil(int(taskObj.completionTime) / 15)
 		starttime = None
 		endtime = None
+		length = 0
 		for j in range(len(dayBlocks)):
+			print(length, workBlock, breakFlag, req)
+			print(req > 0, breakFlag)
+			if length >= workBlock:
+				breakFlag = True
 			if dayBlocks[j] == 0 and starttime is None and req > 0:
+				length += 1
 				starttime = j
 				req -= 1
 			elif dayBlocks[j] == 0 and starttime is not None:
+				length += 1
+				if breakFlag and req > 0:
+					req -= 1
+					endtime = j
+					tasks[i].completionTime = (req + 1) * 15
+					i -= 1
+					break
 				if req > 0:
 					req -= 1
 				elif req == 0:
@@ -175,6 +195,25 @@ def generateBlocks(dayBlocks):
 			db.session.add(scheduledEvent)
 			db.session.commit()
 			dayBlocks = mark_event_time(dayBlocks, scheduledEvent.starttime, scheduledEvent.endtime)
+		if breakFlag:
+			start_hour = endtime // 4
+			start_minute = (endtime % 4) * 15
+			break_length = min_to_blocks(user.breakBlockLength)
+			end_hour = (endtime + break_length) // 4
+			end_minute = ((endtime + break_length) % 4) * 15
+			scheduledEvent = Event(
+				title = "Break",
+				date = datetime.now(pst).date().strftime('%Y-%m-%d'),
+				starttime = f"{start_hour:02}:{start_minute:02}",
+				endtime = f"{end_hour:02}:{end_minute:02}",
+				description = "Break",
+				type = 0,
+				user_id = user.id
+			)
+			db.session.add(scheduledEvent)
+			db.session.commit()
+			dayBlocks = mark_event_time(dayBlocks, scheduledEvent.starttime, scheduledEvent.endtime)
+			breakFlag = False
 		i += 1
 	del tasks
 
@@ -700,6 +739,8 @@ def editEvent(id):
 		eventObj.date = request.form.get("date")
 		eventObj.starttime = request.form.get("starttime")
 		eventObj.endtime = request.form.get("endtime")
+		user.lastUpdate = None
+		clearEvents()
 		db.session.commit()
 		flash("Event updated!")
 		return redirect(url_for('home'))
@@ -741,6 +782,19 @@ def taskSub(id, amount, eventId):
 	db.session.commit()
 	flash("Task time updated!")
 	return redirect(url_for('home'))
+
+@app.route('/settings', methods=["GET", "POST"])
+def settings():
+	user = db.one_or_404(db.select(User).filter_by(username = session["username"]))
+	if request.method == "POST":
+		user.workBlockLength = round_to_nearest_fifteen(int(request.form.get("worktime")))
+		user.breakBlockLength = round_to_nearest_fifteen(int(request.form.get("breaktime")))
+		user.lastUpdate = None
+		clearEvents()
+		db.session.commit()
+		flash("Settings updated!")
+		return redirect(url_for('home'))
+	return render_template('settings.jinja', worktime=user.workBlockLength, breaktime=user.breakBlockLength)
 
 @app.route('/task_add/<int:id>/<int:amount>/<int:eventId>')
 def taskAdd(id, amount, eventId):
