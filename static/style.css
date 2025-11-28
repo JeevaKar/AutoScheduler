@@ -120,6 +120,26 @@ body {
 	color: white;
 }
 
+.calEvent button {
+	margin-top: 10px;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.calUserEvent button {
+	background-color: #f1b59e;
+}
+
+.calTask button {
+	background-color: #6ea5a7;
+}
+
+.calSched button {
+	background-color: #2e2028;
+}
+
 table {
   border-collapse: collapse;
 }
