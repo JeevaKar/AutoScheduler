@@ -142,12 +142,12 @@ def generateBlocks(dayBlocks):
 
 	i = 0
 	breakFlag = False
+	length = 0
 	while i < len(tasks):
 		taskObj = tasks[i]
 		req = math.ceil(int(taskObj.completionTime) / 15)
 		starttime = None
 		endtime = None
-		length = 0
 		for j in range(len(dayBlocks)):
 			if length >= workBlock:
 				breakFlag = True
@@ -156,7 +156,6 @@ def generateBlocks(dayBlocks):
 				starttime = j
 				req -= 1
 			elif dayBlocks[j] == 0 and starttime is not None:
-				length += 1
 				if breakFlag and req > 0:
 					req -= 1
 					endtime = j
@@ -164,6 +163,7 @@ def generateBlocks(dayBlocks):
 					i -= 1
 					break
 				if req > 0:
+					length += 1
 					req -= 1
 				elif req == 0:
 					endtime = j
@@ -212,6 +212,7 @@ def generateBlocks(dayBlocks):
 			db.session.commit()
 			dayBlocks = mark_event_time(dayBlocks, scheduledEvent.starttime, scheduledEvent.endtime)
 			breakFlag = False
+			length = 0
 		i += 1
 	del tasks
 
